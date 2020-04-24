@@ -6,8 +6,8 @@ Trex game using curses (text-based terminal control)
 - Supports all command line platforms
 - Tweak with data to add multiple Jumps
 - Supports any machine with python installed
-Requirements
-===============
+### Requirements
+
 - Your computer
 - Python installed
 - curses working in python (if not, refer below for an installation link)
