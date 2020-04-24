@@ -1,4 +1,4 @@
-## T-rex game (similar to one in your chrome browser
+## T-rex game (similar to one in your chrome browser)
 Trex game using curses (text-based terminal control)
 ### Features
 
