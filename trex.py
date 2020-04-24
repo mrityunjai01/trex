@@ -13,8 +13,8 @@ my_avatar = "M"
 trexes = []
 w.addstr(0, 0, "SCORE")
 class trex:
-    def __init__(self, initx=int(sw), inity=my_pos[0], w=1, height=[1], avatar = 'Z'):
-        self.initx = int(initx)
+    def __init__(self, x=int(sw), inity=my_pos[0], w=1, height=[1], avatar = 'Z'):
+        self.x = int(x)
         self.inity = int(inity)
         self.avatar = avatar
         self.pos = []
@@ -23,15 +23,8 @@ class trex:
             if len(height) == w:
                 self.height = height
             else:
-                h = len(height)
-                if h > w:
-                    print(f"just accepting the first {w} elements of {height}")
-                    for i in range(w):
-                        height.pop()
-                    self.height = height
-                else:
-                    print(f"curtailed width {w} to {h}")
-                    self.w = h
+                self.w = len(height)
+                self.height = height
         elif isinstance(height, int) or isinstance(height, float):
             self.height = [int(height)]*int(w)
         else:
@@ -64,12 +57,17 @@ trexes.append(trex(avatar=curses.ACS_PI, height = [1,2,3,4], w=4))
 w.addstr(0, 10, "press right arrow to exit") 
 key=0
 score = 0
-x = int(sw)
+x = 0
+steps = [6, 1, 0, 0, 0,0, 0, -1, -5, -1]
+steplength = len(steps)
+stepcounter = 0
+blocked = False
 wait_til_next = 15
 while True:
     if wait_til_next<0:
 
-        wait_til_next = random.randint(10, 30)
+        trexes.append(trex(w=random.randint(1, 4), height = [random.randint(0, 5), random.randint(0, 5), random.randint(0, 5), random.randint(0, 5)]))
+        wait_til_next = random.randint(10, 45)
 
     wait_til_next -= 1
     next_key = w.getch()
@@ -77,28 +75,36 @@ while True:
     if key==curses.KEY_RIGHT:
         curses.endwin()
         quit()
-    if key==curses.KEY_UP:
-        try:
+    if not blocked:
+        if key==curses.KEY_UP:
+            blocked = True
+            stepcounter = 0
+    else:
+        if (stepcounter == steplength):
+            blocked = False
+            stepcounter = 0
+        else:
             w.addch(my_pos[0], my_pos[1], " ")
-            my_pos[0]-=1
-        except:
-            my_pos[0] = int(sh/2)
-    if key==curses.KEY_DOWN:
-        try:
-            w.addch(my_pos[0], my_pos[1], " ")
-            my_pos[0]+=1
-        except:
-            my_pos[0] = int(sh/2)
+            my_pos[0]-= steps[stepcounter]
+            print(steps[stepcounter], my_pos[0])
+            stepcounter += 1
+    # if key==curses.KEY_DOWN:
+    #     try:
+    #         w.addch(my_pos[0], my_pos[1], " ")
+    #         my_pos[0]+=1
+    #     except:
+    #         my_pos[0] = int(sh/2)
     for t in trexes:
-        t.draw(w, x)
+        if (t.x+t.w<0):
+            trexes.remove(t)
+        t.draw(w, t.x)
+        t.x -= 1
     try:    
         w.addch(my_pos[0], my_pos[1], my_avatar)
     except:
         my_pos[0] = int(sh/2)
     # w.addch(int(sh/2), int(sw/2), curses.ACS_PI)
-    x-=1
-    if (x + 4 < 0):
-        x = int(sw)
+    
     score += 1
     w.addstr(0, 7, str(score))
     for t in trexes:
