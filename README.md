@@ -16,8 +16,8 @@ Trex game using curses (text-based terminal control)
 - To install Curses type this in terminal (for Windows):
 # How to check if curses is installed
 Try one of these:
-python -c "import curses"
-py -c "import curses"
-python3 -c "import curses"
+- python -c "import curses"
+- py -c "import curses"
+- python3 -c "import curses"
 ####pip install windows-curses
 - [Try this link otherwise, Curses (for Win 10 Users (32-bit python installation))](https://www.lfd.uci.edu/~gohlke/pythonlibs/#curses)
