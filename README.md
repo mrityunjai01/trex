@@ -1,5 +1,7 @@
 ## T-rex game (similar to one in your chrome browser)
-Trex game using curses (text-based terminal control)
+Trex game using curses (text-based terminal control
+# How to play
+Download trex.py into a folder, on a terminal created in the same folder type "python trex.py" or more generally, <path_to python_exec> <path_to_trex.py> 
 ### Features
 
 - Can add custom t-rexes that can be built usinf python editor
